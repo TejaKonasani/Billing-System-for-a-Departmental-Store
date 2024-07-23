@@ -1,0 +1,658 @@
+-- create table with name Products --
+  
+CREATE TABLE Products (
+    ProductID INTEGER PRIMARY KEY AUTOINCREMENT,
+    ProductName TEXT NOT NULL,
+    Category TEXT,
+    Price REAL NOT NULL,
+    StockQuantity INTEGER NOT NULL
+);
+
+
+-- create table with name Customers -- 
+
+CREATE TABLE Customers (
+    CustomerID INTEGER PRIMARY KEY AUTOINCREMENT,
+    FirstName TEXT NOT NULL,
+    LastName TEXT NOT NULL,
+    Email TEXT,
+    PhoneNumber TEXT,
+    Address TEXT
+);
+
+
+-- create table with name Orders --
+
+CREATE TABLE Orders (
+    OrderID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CustomerID INTEGER,
+    OrderDate DATE NOT NULL,
+    TotalAmount REAL NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID)
+);
+
+
+-- create table with name OrderDetails --
+  
+CREATE TABLE OrderDetails (
+    OrderDetailID INTEGER PRIMARY KEY AUTOINCREMENT,
+    OrderID INTEGER,
+    ProductID INTEGER,
+    Quantity INTEGER NOT NULL,
+    UnitPrice REAL NOT NULL,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+
+-- create table with name Payements --
+  
+CREATE TABLE Payments (
+    PaymentID INTEGER PRIMARY KEY AUTOINCREMENT,
+    OrderID INTEGER,
+    PaymentDate DATE NOT NULL,
+    AmountPaid REAL NOT NULL,
+    PaymentMethod TEXT,
+    FOREIGN KEY (OrderID) REFERENCES Orders(OrderID)
+);
+
+
+-- create table with name Suppliers --
+  
+CREATE TABLE Suppliers (
+    SupplierID INTEGER PRIMARY KEY AUTOINCREMENT,
+    SupplierName TEXT NOT NULL,
+    ContactName TEXT,
+    ContactEmail TEXT,
+    ContactPhone TEXT,
+    Address TEXT
+);
+
+
+-- create table with name Categories --
+  
+CREATE TABLE Categories (
+    CategoryID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CategoryName TEXT NOT NULL,
+    Description TEXT
+);
+
+
+-- create table with name Employees --
+  
+CREATE TABLE Employees (
+    EmployeeID INTEGER PRIMARY KEY AUTOINCREMENT,
+    FirstName TEXT NOT NULL,
+    LastName TEXT NOT NULL,
+    Email TEXT,
+    PhoneNumber TEXT,
+    HireDate DATE NOT NULL,
+    JobTitle TEXT
+);
+
+
+-- create table with name Discounts --
+  
+CREATE TABLE Discounts (
+    DiscountID INTEGER PRIMARY KEY AUTOINCREMENT,
+    DiscountCode TEXT NOT NULL,
+    Description TEXT,
+    DiscountPercentage REAL NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL
+);
+
+
+-- create table with name Returns --
+  
+CREATE TABLE Returns (
+    ReturnID INTEGER PRIMARY KEY AUTOINCREMENT,
+    OrderDetailID INTEGER,
+    ReturnDate DATE NOT NULL,
+    Quantity INTEGER NOT NULL,
+    Reason TEXT,
+    FOREIGN KEY (OrderDetailID) REFERENCES OrderDetails(OrderDetailID)
+);
+
+
+
+
+-- Add values for table Products --
+  
+INSERT INTO Products (ProductName, Category, Price, StockQuantity)
+VALUES
+('Milk', 'Dairy', 1.20, 100),
+('Bread', 'Bakery', 1.00, 50),
+('Eggs', 'Dairy', 2.00, 200),
+('Cheese', 'Dairy', 3.50, 75),
+('Butter', 'Dairy', 2.50, 60),
+('Yogurt', 'Dairy', 1.00, 150),
+('Bagels', 'Bakery', 1.50, 40),
+('Croissants', 'Bakery', 2.00, 30),
+('Muffins', 'Bakery', 1.75, 20),
+('Apples', 'Produce', 1.20, 100),
+('Bananas', 'Produce', 0.50, 200),
+('Carrots', 'Produce', 1.00, 80),
+('Tomatoes', 'Produce', 1.50, 60),
+('Chicken', 'Meat', 5.00, 30),
+('Beef', 'Meat', 7.00, 20),
+('Pork', 'Meat', 6.00, 25),
+('Fish', 'Seafood', 8.00, 15),
+('Shrimp', 'Seafood', 10.00, 10),
+('Salmon', 'Seafood', 12.00, 8),
+('Tuna', 'Seafood', 9.00, 12),
+('Rice', 'Grains', 1.50, 100),
+('Pasta', 'Grains', 1.20, 120),
+('Flour', 'Baking', 1.00, 50),
+('Sugar', 'Baking', 1.10, 60),
+('Salt', 'Baking', 0.90, 80),
+('Pepper', 'Spices', 1.50, 40),
+('Cinnamon', 'Spices', 2.00, 30),
+('Garlic Powder', 'Spices', 2.50, 25),
+('Oregano', 'Spices', 3.00, 20),
+('Basil', 'Spices', 2.50, 15);
+
+
+Select * From Products
+
+
+
+-- Add values for table Customers --
+  
+INSERT INTO Customers (FirstName, LastName, Email, PhoneNumber, Address)
+VALUES
+('John', 'Doe', 'john.doe@example.com', '1234567890', '123 Elm Street'),
+('Jane', 'Smith', 'jane.smith@example.com', '0987654321', '456 Oak Street'),
+('Michael', 'Johnson', 'michael.johnson@example.com', '2345678901', '789 Pine Street'),
+('Emily', 'Davis', 'emily.davis@example.com', '3456789012', '101 Maple Avenue'),
+('David', 'Miller', 'david.miller@example.com', '4567890123', '202 Birch Road'),
+('Sarah', 'Wilson', 'sarah.wilson@example.com', '5678901234', '303 Cedar Lane'),
+('Daniel', 'Moore', 'daniel.moore@example.com', '6789012345', '404 Spruce Street'),
+('Laura', 'Taylor', 'laura.taylor@example.com', '7890123456', '505 Willow Way'),
+('James', 'Anderson', 'james.anderson@example.com', '8901234567', '606 Poplar Drive'),
+('Sophia', 'Thomas', 'sophia.thomas@example.com', '9012345678', '707 Walnut Street'),
+('Robert', 'Jackson', 'robert.jackson@example.com', '1123456789', '808 Cherry Boulevard'),
+('Olivia', 'White', 'olivia.white@example.com', '2234567890', '909 Chestnut Court'),
+('William', 'Harris', 'william.harris@example.com', '3345678901', '1010 Hickory Circle'),
+('Isabella', 'Martin', 'isabella.martin@example.com', '4456789012', '1111 Ash Street'),
+('Richard', 'Thompson', 'richard.thompson@example.com', '5567890123', '1212 Dogwood Lane'),
+('Emma', 'Garcia', 'emma.garcia@example.com', '6678901234', '1313 Locust Avenue'),
+('Charles', 'Martinez', 'charles.martinez@example.com', '7789012345', '1414 Magnolia Road'),
+('Mia', 'Robinson', 'mia.robinson@example.com', '8890123456', '1515 Redwood Street'),
+('Joseph', 'Clark', 'joseph.clark@example.com', '9901234567', '1616 Elmwood Drive'),
+('Ava', 'Rodriguez', 'ava.rodriguez@example.com', '1012345678', '1717 Aspen Lane'),
+('Thomas', 'Lewis', 'thomas.lewis@example.com', '2123456789', '1818 Sequoia Street'),
+('Sophia', 'Walker', 'sophia.walker@example.com', '3234567890', '1919 Juniper Drive'),
+('Henry', 'Hall', 'henry.hall@example.com', '4345678901', '2020 Cypress Avenue'),
+('Emma', 'Allen', 'emma.allen@example.com', '5456789012', '2121 Sycamore Road'),
+('Christopher', 'Young', 'christopher.young@example.com', '6567890123', '2222 Dogwood Street'),
+('Isabella', 'King', 'isabella.king@example.com', '7678901234', '2323 Oakwood Drive'),
+('Matthew', 'Wright', 'matthew.wright@example.com', '8789012345', '2424 Birch Avenue'),
+('Sophia', 'Scott', 'sophia.scott@example.com', '9890123456', '2525 Willow Street'),
+('Elizabeth', 'Green', 'elizabeth.green@example.com', '1091234567', '2626 Maple Drive'),
+('James', 'Baker', 'james.baker@example.com', '2192345678', '2727 Elm Street');
+
+
+Select * From Customers
+
+
+
+-- Add values for table Orders --
+  
+INSERT INTO Orders (CustomerID, OrderDate, TotalAmount)
+VALUES
+(1, '2024-07-23', 4.40),
+(2, '2024-07-23', 15.75),
+(3, '2024-07-23', 22.30),
+(4, '2024-07-23', 8.50),
+(5, '2024-07-23', 13.60),
+(6, '2024-07-23', 7.20),
+(7, '2024-07-23', 18.90),
+(8, '2024-07-23', 14.70),
+(9, '2024-07-23', 11.50),
+(10, '2024-07-23', 9.80),
+(11, '2024-07-23', 21.30),
+(12, '2024-07-23', 6.40),
+(13, '2024-07-23', 19.20),
+(14, '2024-07-23', 5.50),
+(15, '2024-07-23', 12.80),
+(16, '2024-07-23', 16.70),
+(17, '2024-07-23', 23.90),
+(18, '2024-07-23', 7.10),
+(19, '2024-07-23', 10.60),
+(20, '2024-07-23', 13.30),
+(21, '2024-07-23', 15.00),
+(22, '2024-07-23', 17.80),
+(23, '2024-07-23', 11.20),
+(24, '2024-07-23', 8.90),
+(25, '2024-07-23', 20.40),
+(26, '2024-07-23', 22.50),
+(27, '2024-07-23', 9.30),
+(28, '2024-07-23', 18.00),
+(29, '2024-07-23', 24.70),
+(30, '2024-07-23', 5.20);
+
+
+Select * From Orders
+
+
+
+-- Add values for table OrderDetails --
+  
+INSERT INTO OrderDetails (OrderID, ProductID, Quantity, UnitPrice)
+VALUES
+(1, 1, 2, 1.20),  
+(1, 2, 1, 1.00),  
+(2, 3, 1, 2.00),  
+(2, 4, 1, 3.50),  
+(2, 5, 1, 2.50),  
+(3, 6, 3, 1.00),  
+(3, 7, 2, 1.50), 
+(4, 8, 1, 2.00),  
+(4, 9, 4, 1.75),  
+(5, 10, 5, 1.20), 
+(5, 11, 6, 0.50), 
+(6, 12, 3, 1.00), 
+(6, 13, 2, 1.50), 
+(7, 14, 1, 5.00), 
+(7, 15, 1, 7.00), 
+(8, 16, 2, 6.00), 
+(8, 17, 3, 8.00), 
+(9, 18, 1, 10.00),
+(9, 19, 1, 12.00),
+(10, 20, 2, 9.00),
+(10, 21, 2, 1.50),
+(11, 22, 3, 1.20),
+(11, 23, 1, 1.00),
+(12, 24, 2, 1.10),
+(12, 25, 3, 0.90),
+(13, 26, 2, 1.50),
+(13, 27, 1, 2.00),
+(14, 28, 2, 2.50),
+(14, 29, 1, 3.00),
+(15, 30, 2, 2.50); 
+
+
+Select * From OrderDetails
+
+
+
+-- Add values for table Payements --
+  
+INSERT INTO Payments (OrderID, PaymentDate, AmountPaid, PaymentMethod)
+VALUES
+(1, '2024-07-23', 4.40, 'Credit Card'),
+(2, '2024-07-23', 15.75, 'Debit Card'),
+(3, '2024-07-23', 22.30, 'PayPal'),
+(4, '2024-07-23', 8.50, 'Credit Card'),
+(5, '2024-07-23', 13.60, 'Cash'),
+(6, '2024-07-23', 7.20, 'Credit Card'),
+(7, '2024-07-23', 18.90, 'Debit Card'),
+(8, '2024-07-23', 14.70, 'PayPal'),
+(9, '2024-07-23', 11.50, 'Cash'),
+(10, '2024-07-23', 9.80, 'Credit Card'),
+(11, '2024-07-23', 21.30, 'Debit Card'),
+(12, '2024-07-23', 6.40, 'PayPal'),
+(13, '2024-07-23', 19.20, 'Cash'),
+(14, '2024-07-23', 5.50, 'Credit Card'),
+(15, '2024-07-23', 12.80, 'Debit Card'),
+(16, '2024-07-23', 16.70, 'PayPal'),
+(17, '2024-07-23', 23.90, 'Cash'),
+(18, '2024-07-23', 7.10, 'Credit Card'),
+(19, '2024-07-23', 10.60, 'Debit Card'),
+(20, '2024-07-23', 13.30, 'PayPal'),
+(21, '2024-07-23', 15.00, 'Cash'),
+(22, '2024-07-23', 17.80, 'Credit Card'),
+(23, '2024-07-23', 11.20, 'Debit Card'),
+(24, '2024-07-23', 8.90, 'PayPal'),
+(25, '2024-07-23', 20.40, 'Cash'),
+(26, '2024-07-23', 22.50, 'Credit Card'),
+(27, '2024-07-23', 9.30, 'Debit Card'),
+(28, '2024-07-23', 18.00, 'PayPal'),
+(29, '2024-07-23', 24.70, 'Cash'),
+(30, '2024-07-23', 5.20, 'Credit Card');
+
+
+Select * From Payements
+
+
+
+-- Add values for table Suppliers --
+  
+INSERT INTO Suppliers (SupplierName, ContactName, ContactEmail, ContactPhone, Address)
+VALUES
+('ABC Suppliers', 'Alice Brown', 'alice.brown@abc.com', '1234567890', '789 Pine Street'),
+('XYZ Distributors', 'Bob White', 'bob.white@xyz.com', '0987654321', '321 Maple Avenue'),
+('Global Tech', 'Charlie Black', 'charlie.black@globaltech.com', '1122334455', '456 Oak Lane'),
+('Innovative Solutions', 'David Green', 'david.green@innovativesolutions.com', '2233445566', '654 Elm Street'),
+('Elite Supplies', 'Emily Harris', 'emily.harris@elitesupplies.com', '3344556677', '987 Birch Road'),
+('Techie Traders', 'Frank Martinez', 'frank.martinez@techietraders.com', '4455667788', '123 Cedar Drive'),
+('Future Goods', 'Grace Wilson', 'grace.wilson@futuregoods.com', '5566778899', '345 Walnut Avenue'),
+('Precision Parts', 'Hank Johnson', 'hank.johnson@precisionparts.com', '6677889900', '789 Maple Street'),
+('Quality Supplies', 'Ivy Clark', 'ivy.clark@qualitysupplies.com', '7788990011', '234 Pine Road'),
+('NextGen Products', 'Jack Turner', 'jack.turner@nextgenproducts.com', '8899001122', '567 Oak Lane'),
+('Metro Wholesale', 'Karen Lewis', 'karen.lewis@metrowholesale.com', '9900112233', '890 Elm Street'),
+('Reliable Source', 'Laura White', 'laura.white@reliablesource.com', '0011223344', '123 Birch Avenue'),
+('Supply Chain Co', 'Mike Adams', 'mike.adams@supplychainco.com', '1122334455', '456 Cedar Street'),
+('WorldWide Traders', 'Nina Harris', 'nina.harris@worldwidetraders.com', '2233445566', '789 Maple Lane'),
+('Pro Suppliers', 'Oscar Lee', 'oscar.lee@prosuppliers.com', '3344556677', '234 Oak Avenue'),
+('Fast Supplies', 'Patricia Martin', 'patricia.martin@fastsupplies.com', '4455667788', '567 Pine Road'),
+('Alpha Distributors', 'Quincy Nelson', 'quincy.nelson@alphadistributors.com', '5566778899', '890 Elm Lane'),
+('Premier Goods', 'Rachel Young', 'rachel.young@premiergoods.com', '6677889900', '123 Cedar Avenue'),
+('Direct Source', 'Samuel King', 'samuel.king@directsource.com', '7788990011', '456 Walnut Street'),
+('Ace Suppliers', 'Tina Scott', 'tina.scott@acesuppliers.com', '8899001122', '789 Oak Road'),
+('TopNotch Supplies', 'Ulysses Wright', 'ulysses.wright@topnotchsupplies.com', '9900112233', '234 Birch Lane'),
+('Smart Traders', 'Vera Turner', 'vera.turner@smarttraders.com', '0011223344', '567 Maple Avenue'),
+('Golden Goods', 'Walter Adams', 'walter.adams@goldengoods.com', '1122334455', '890 Pine Street'),
+('Supreme Supply', 'Xena Roberts', 'xena.roberts@supremesupply.com', '2233445566', '123 Oak Lane'),
+('Rapid Distributors', 'Yvonne Clark', 'yvonne.clark@rapiddistributors.com', '3344556677', '456 Elm Avenue'),
+('Innovate Traders', 'Zachary Allen', 'zachary.allen@innovate-traders.com', '4455667788', '789 Cedar Road'),
+('Advance Supplies', 'Anna Wilson', 'anna.wilson@advancesupplies.com', '5566778899', '234 Maple Avenue'),
+('Optimum Goods', 'Brian Davis', 'brian.davis@optimumgoods.com', '6677889900', '567 Birch Lane'),
+('NextLevel Supply', 'Catherine White', 'catherine.white@nextlevelsupply.com', '7788990011', '890 Oak Street'),
+('Pinnacle Traders', 'Daniel Hall', 'daniel.hall@pinnacletraders.com', '8899001122', '123 Elm Road'),
+('Progressive Supplies', 'Ella Young', 'ella.young@progressivesupplies.com', '9900112233', '456 Pine Lane'),
+('Premier Traders', 'Franklin Walker', 'franklin.walker@premiertraders.com', '0011223344', '789 Walnut Avenue'),
+('Quality Goods', 'Georgia Harris', 'georgia.harris@qualitygoods.com', '1122334455', '234 Cedar Street'),
+('Advanced Solutions', 'Henry Carter', 'henry.carter@advancedsolutions.com', '2233445566', '567 Elm Avenue');
+
+
+Select * From Suppliers
+
+
+
+-- Add values for table Categories --
+  
+INSERT INTO Categories (CategoryName, Description)
+VALUES
+('Dairy', 'Milk, cheese, and other dairy products'),
+('Bakery', 'Bread, pastries, and other baked goods'),
+('Fruits', 'Fresh and preserved fruits'),
+('Vegetables', 'Fresh and processed vegetables'),
+('Meat', 'Fresh and packaged meats'),
+('Seafood', 'Fish and other seafood'),
+('Beverages', 'Drinks, both non-alcoholic and alcoholic'),
+('Snacks', 'Chips, nuts, and other snack items'),
+('Cereals', 'Breakfast cereals and grains'),
+('Frozen Foods', 'Frozen meals and ingredients'),
+('Condiments', 'Sauces, dressings, and seasonings'),
+('Spices', 'Herbs and spices for cooking'),
+('Packaged Foods', 'Ready-to-eat and convenience foods'),
+('Bakery Ingredients', 'Flour, sugar, and other baking ingredients'),
+('Organic', 'Organic produce and products'),
+('Health Foods', 'Nutritional and dietary foods'),
+('Baby Products', 'Food and supplies for babies'),
+('Personal Care', 'Hygiene and personal care items'),
+('Cleaning Supplies', 'Products for cleaning and household maintenance'),
+('Pet Supplies', 'Food and accessories for pets'),
+('Kitchenware', 'Utensils and tools for the kitchen'),
+('Alcoholic Beverages', 'Beer, wine, and spirits'),
+('Coffee & Tea', 'Coffee, tea, and related products'),
+('Desserts', 'Sweet treats and desserts'),
+('International Foods', 'Foods from various international cuisines'),
+('Gourmet', 'High-end and specialty foods'),
+('Health Supplements', 'Vitamins and dietary supplements'),
+('Household Items', 'General household products'),
+('Office Supplies', 'Stationery and office-related products'),
+('Seasonal Products', 'Products available only during specific seasons'),
+('Bulk Foods', 'Products sold in large quantities');
+
+
+Select * From Categories
+
+
+
+-- Add values for table Employees --
+
+INSERT INTO Employees (FirstName, LastName, Email, PhoneNumber, HireDate, JobTitle)
+VALUES
+('Emily', 'Johnson', 'emily.johnson@example.com', '1122334455', '2023-01-15', 'Cashier'),
+('Michael', 'Williams', 'michael.williams@example.com', '2233445566', '2022-06-01', 'Manager'),
+('Olivia', 'Smith', 'olivia.smith@example.com', '3344556677', '2021-11-23', 'Sales Associate'),
+('James', 'Brown', 'james.brown@example.com', '4455667788', '2022-09-10', 'Stock Clerk'),
+('Sophia', 'Jones', 'sophia.jones@example.com', '5566778899', '2023-03-08', 'Customer Service'),
+('Liam', 'Garcia', 'liam.garcia@example.com', '6677889900', '2022-12-17', 'Supervisor'),
+('Emma', 'Martinez', 'emma.martinez@example.com', '7788990011', '2021-07-01', 'Cashier'),
+('Noah', 'Rodriguez', 'noah.rodriguez@example.com', '8899001122', '2023-05-20', 'Assistant Manager'),
+('Ava', 'Wilson', 'ava.wilson@example.com', '9900112233', '2022-10-11', 'Sales Associate'),
+('Ethan', 'Anderson', 'ethan.anderson@example.com', '0011223344', '2023-04-25', 'Stock Clerk'),
+('Isabella', 'Thomas', 'isabella.thomas@example.com', '1122334455', '2022-08-03', 'Customer Service'),
+('Mason', 'Taylor', 'mason.taylor@example.com', '2233445566', '2021-09-14', 'Supervisor'),
+('Mia', 'Moore', 'mia.moore@example.com', '3344556677', '2023-02-22', 'Cashier'),
+('Jacob', 'Jackson', 'jacob.jackson@example.com', '4455667788', '2022-11-07', 'Assistant Manager'),
+('Charlotte', 'White', 'charlotte.white@example.com', '5566778899', '2023-06-30', 'Sales Associate'),
+('William', 'Harris', 'william.harris@example.com', '6677889900', '2022-01-19', 'Stock Clerk'),
+('Amelia', 'Martin', 'amelia.martin@example.com', '7788990011', '2023-07-12', 'Customer Service'),
+('Benjamin', 'Thompson', 'benjamin.thompson@example.com', '8899001122', '2022-05-15', 'Supervisor'),
+('Harper', 'Garcia', 'harper.garcia@example.com', '9900112233', '2023-08-21', 'Cashier'),
+('Lucas', 'Martinez', 'lucas.martinez@example.com', '0011223344', '2022-12-05', 'Assistant Manager'),
+('Ella', 'Wilson', 'ella.wilson@example.com', '1122334455', '2023-04-10', 'Sales Associate'),
+('Henry', 'Brown', 'henry.brown@example.com', '2233445566', '2022-09-29', 'Stock Clerk'),
+('Aiden', 'Moore', 'aiden.moore@example.com', '3344556677', '2023-01-30', 'Customer Service'),
+('Zoe', 'Taylor', 'zoe.taylor@example.com', '4455667788', '2022-07-22', 'Supervisor'),
+('Jackson', 'Johnson', 'jackson.johnson@example.com', '5566778899', '2023-06-17', 'Cashier'),
+('Lily', 'Jackson', 'lily.jackson@example.com', '6677889900', '2022-11-10', 'Assistant Manager'),
+('Sebastian', 'Harris', 'sebastian.harris@example.com', '7788990011', '2023-03-12', 'Sales Associate'),
+('Mila', 'White', 'mila.white@example.com', '8899001122', '2022-08-05', 'Stock Clerk'),
+('James', 'Green', 'james.green@example.com', '9900112233', '2023-07-30', 'Customer Service'),
+('Evelyn', 'Lewis', 'evelyn.lewis@example.com', '0011223344', '2022-10-15', 'Supervisor');
+
+
+Select * From Employees
+
+
+
+-- Add values for table Discounts --
+  
+INSERT INTO Discounts (DiscountCode, Description, DiscountPercentage, StartDate, EndDate)
+VALUES
+('SUMMER2024', 'Summer Sale 2024', 10.00, '2024-07-01', '2024-07-31'),
+('NEWYEAR2025', 'New Year Sale 2025', 15.00, '2024-12-25', '2025-01-05'),
+('FALL2024', 'Fall Promotion 2024', 20.00, '2024-09-01', '2024-09-30'),
+('WINTER2024', 'Winter Clearance 2024', 25.00, '2024-11-01', '2024-11-30'),
+('SPRING2025', 'Spring Special 2025', 18.00, '2025-03-01', '2025-03-31'),
+('BLACKFRIDAY2024', 'Black Friday 2024', 30.00, '2024-11-29', '2024-11-29'),
+('CYBERMONDAY2024', 'Cyber Monday 2024', 22.00, '2024-12-02', '2024-12-02'),
+('VALENTINE2025', 'Valentine’s Day 2025', 12.00, '2025-02-01', '2025-02-14'),
+('EASTER2025', 'Easter Sale 2025', 16.00, '2025-04-01', '2025-04-15'),
+('LABORDAY2024', 'Labor Day 2024', 14.00, '2024-08-30', '2024-09-02'),
+('HALLOWEEN2024', 'Halloween Discount 2024', 20.00, '2024-10-01', '2024-10-31'),
+('THANKSGIVING2024', 'Thanksgiving Offer 2024', 25.00, '2024-11-25', '2024-11-28'),
+('CHRISTMAS2024', 'Christmas Sale 2024', 30.00, '2024-12-20', '2024-12-25'),
+('NEWYEAR2024', 'New Year Eve 2024', 15.00, '2024-12-31', '2025-01-01'),
+('MIDSEASON2024', 'Mid-Season Sale 2024', 18.00, '2024-10-01', '2024-10-15'),
+('BACKTOSCHOOL2024', 'Back to School 2024', 12.00, '2024-08-01', '2024-08-31'),
+('MOTHERSDAY2025', 'Mother’s Day 2025', 10.00, '2025-05-01', '2025-05-14'),
+('FATHERSDAY2025', 'Father’s Day 2025', 15.00, '2025-06-01', '2025-06-15'),
+('SUMMER2025', 'Summer Sale 2025', 20.00, '2025-07-01', '2025-07-31'),
+('LABORDAY2025', 'Labor Day 2025', 18.00, '2025-08-30', '2025-09-02'),
+('FALL2025', 'Fall Promotion 2025', 22.00, '2025-09-01', '2025-09-30'),
+('WINTER2025', 'Winter Clearance 2025', 25.00, '2025-11-01', '2025-11-30'),
+('SPRING2026', 'Spring Special 2026', 18.00, '2026-03-01', '2026-03-31'),
+('BLACKFRIDAY2025', 'Black Friday 2025', 30.00, '2025-11-28', '2025-11-28'),
+('CYBERMONDAY2025', 'Cyber Monday 2025', 22.00, '2025-12-01', '2025-12-01'),
+('VALENTINE2026', 'Valentine’s Day 2026', 12.00, '2026-02-01', '2026-02-14'),
+('EASTER2026', 'Easter Sale 2026', 16.00, '2026-04-01', '2026-04-15'),
+('HALLOWEEN2025', 'Halloween Discount 2025', 20.00, '2025-10-01', '2025-10-31'),
+('THANKSGIVING2025', 'Thanksgiving Offer 2025', 25.00, '2025-11-25', '2025-11-28'),
+('CHRISTMAS2025', 'Christmas Sale 2025', 30.00, '2025-12-20', '2025-12-25'),
+('NEWYEAR2026', 'New Year Eve 2026', 15.00, '2025-12-31', '2026-01-01');
+
+
+Select * From Discounts
+
+
+
+-- Add values for table Returns --
+  
+INSERT INTO Returns (OrderDetailID, ReturnDate, Quantity, Reason)
+VALUES
+(1, '2024-07-05', 2, 'Damaged item'),
+(2, '2024-07-06', 1, 'Incorrect size'),
+(3, '2024-07-07', 5, 'Not as described'),
+(4, '2024-07-08', 1, 'Defective'),
+(5, '2024-07-09', 3, 'Late delivery'),
+(6, '2024-07-10', 2, 'Wrong item sent'),
+(7, '2024-07-11', 4, 'Quality issues'),
+(8, '2024-07-12', 6, 'Customer changed mind'),
+(9, '2024-07-13', 1, 'Missing parts'),
+(10, '2024-07-14', 3, 'Item arrived damaged'),
+(11, '2024-07-15', 2, 'Wrong color'),
+(12, '2024-07-16', 5, 'Item not as pictured'),
+(13, '2024-07-17', 1, 'Defective part'),
+(14, '2024-07-18', 7, 'Product malfunctioned'),
+(15, '2024-07-19', 4, 'Order error'),
+(16, '2024-07-20', 3, 'Poor quality'),
+(17, '2024-07-21', 2, 'Late shipment'),
+(18, '2024-07-22', 1, 'Item not needed'),
+(19, '2024-07-23', 6, 'Product didn’t meet expectations'),
+(20, '2024-07-24', 2, 'Duplicate order'),
+(21, '2024-07-25', 4, 'Wrong quantity'),
+(22, '2024-07-26', 3, 'Item not suitable'),
+(23, '2024-07-27', 1, 'Incorrect description'),
+(24, '2024-07-28', 5, 'Item had defects'),
+(25, '2024-07-29', 2, 'Customer found better option'),
+(26, '2024-07-30', 4, 'Packaging issues'),
+(27, '2024-07-31', 6, 'Product not as advertised'),
+(28, '2024-08-01', 3, 'Item did not fit'),
+(29, '2024-08-02', 2, 'Shipping errors'),
+(30, '2024-08-03', 5, 'Unsatisfactory performance');
+
+
+Select * From Returns
+
+
+
+
+
+CREATE TABLE Orders (
+    OrderID INTEGER PRIMARY KEY AUTOINCREMENT,
+    CustomerID INTEGER,
+    StoreID INTEGER,
+    OrderDate DATE NOT NULL,
+    TotalAmount REAL NOT NULL,
+    FOREIGN KEY (CustomerID) REFERENCES Customers(CustomerID),
+    FOREIGN KEY (StoreID) REFERENCES Stores(StoreID)
+);
+
+
+
+INSERT INTO Stores (StoreName, City, Address)
+VALUES
+('Main Street Store', 'New York', '123 Main Street, New York, NY'),
+('Downtown Store', 'San Francisco', '456 Market Street, San Francisco, CA');
+
+
+
+INSERT INTO Users (UserName, Password, Role, StoreID)
+VALUES
+('admin1', 'password123', 'Admin', 1),
+('cashier1', 'password123', 'Cashier', 1),
+('manager1', 'password123', 'Manager', 2);
+
+
+INSERT INTO Orders (CustomerID, StoreID, OrderDate, TotalAmount)
+VALUES (1, 1, '2024-07-23', 50.00);
+
+
+
+SELECT LAST_INSERT_ID();
+
+
+
+INSERT INTO OrderDetails (OrderID, ProductID, Quantity, UnitPrice)
+VALUES
+(1, 1, 2, 1.20),  -- 2 Milk
+(1, 2, 1, 1.00);  -- 1 Bread
+
+
+
+INSERT INTO Payments (OrderID, PaymentDate, AmountPaid, PaymentMethod)
+VALUES (1, '2024-07-23', 50.00, 'Credit Card');
+
+
+
+SELECT 
+    o.OrderID, 
+    o.OrderDate, 
+    o.TotalAmount, 
+    c.FirstName || ' ' || c.LastName AS CustomerName
+FROM Orders o
+JOIN Customers c ON o.CustomerID = c.CustomerID
+WHERE o.StoreID = 1;
+
+
+
+SELECT 
+    p.ProductID, 
+    p.ProductName, 
+    p.Price, 
+    p.StockQuantity
+FROM Products p
+JOIN Categories c ON p.Category = c.CategoryName
+WHERE c.CategoryID = 1;
+
+
+
+
+SELECT 
+    e.EmployeeID, 
+    e.FirstName, 
+    e.LastName, 
+    e.JobTitle
+FROM Employees e
+WHERE e.StoreID = 1;
+
+
+
+SELECT 
+    DiscountID, 
+    DiscountCode, 
+    Description, 
+    DiscountPercentage, 
+    StartDate, 
+    EndDate
+FROM Discounts;
+
+
+
+SELECT 
+    r.ReturnID, 
+    r.ReturnDate, 
+    r.Quantity, 
+    r.Reason, 
+    od.ProductID, 
+    p.ProductName
+FROM Returns r
+JOIN OrderDetails od ON r.OrderDetailID = od.OrderDetailID
+JOIN Products p ON od.ProductID = p.ProductID
+WHERE od.OrderID = 1;
+
+
+
+
+INSERT INTO Users (UserName, Password, Role, StoreID)
+VALUES ('newuser', 'newpassword', 'Cashier', 1);
+
+
+
+SELECT 
+    UserID, 
+    UserName, 
+    Role, 
+    StoreID
+FROM Users;
+
+
+
+INSERT INTO Stores (StoreName, City, Address)
+VALUES ('Uptown Store', 'Los Angeles', '789 Sunset Boulevard, Los Angeles, CA');
+
+
+
+SELECT 
+    StoreID, 
+    StoreName, 
+    City, 
+    Address
+FROM Stores;
